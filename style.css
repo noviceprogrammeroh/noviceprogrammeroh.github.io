@@ -15,10 +15,6 @@ body {
   animation-name: animation;
   animation-duration: 10s;
   animation-iteration-count: infinite;
-
-
-
-
 }
 
 .container {
@@ -36,7 +32,7 @@ body {
   color: #292414;
 }
 
-.status-action {
+.statusaction {
   display: flex;
   margin-top: 35px;
   font-size: 25px;
@@ -61,7 +57,7 @@ body {
   color: #F2EBD3;
 }
 
-.game-grid {
+.grid {
   background: #a2b0ae;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -70,7 +66,7 @@ body {
   margin-top: 50px;
 }
 
-.gamecell {
+.boxes {
   background: #383c3a;
   display: flex;
   justify-content: center;

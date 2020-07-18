@@ -1,16 +1,16 @@
 // HTML Elements
 const statsDiv = document.querySelector('.status');
 const resetDiv = document.querySelector('.reset');
-const divOfCells = document.querySelectorAll('.gamecell');
+const divBoxes = document.querySelectorAll('.boxes');
 
 
 
 // global variables
 const xLetter = '×';
 const oLetter = '○';
-
-let gameLive = true;
-let xTurn = true;
+// initialize variables
+let gameLive = true;  
+let playerXTurn = true;
 
 
 // functions
@@ -25,65 +25,66 @@ const winnerFntion = (letter) => {
   }
 };
 
-// check game status
+// check game status and boxes positions // create loop ...
 const checkStatusOfGame = () => {
-  const topLeft = divOfCells[0].classList[1];
-  const topMiddle = divOfCells[1].classList[1];
-  const topRight = divOfCells[2].classList[1];
-  const middleLeft = divOfCells[3].classList[1];
-  const middleMiddle = divOfCells[4].classList[1];
-  const middleRight = divOfCells[5].classList[1];
-  const bottomLeft = divOfCells[6].classList[1];
-  const bottomMiddle = divOfCells[7].classList[1];
-  const bottomRight = divOfCells[8].classList[1];
+  const topLeft = divBoxes[0].classList[1]; // 1st index section of the cell or box
+  const topMiddle = divBoxes[1].classList[1];
+  const topRight = divBoxes[2].classList[1];
+  const middleLeft = divBoxes[3].classList[1];
+  const middleMiddle = divBoxes[4].classList[1];
+  const middleRight = divBoxes[5].classList[1];
+  const bottomLeft = divBoxes[6].classList[1];
+  const bottomMiddle = divBoxes[7].classList[1];
+  const bottomRight = divBoxes[8].classList[1];
 
   // if statements to check for possibe combinations (logic of the game)
+  // switch cases can be used.... 
   if (topLeft && topLeft === topMiddle && topLeft === topRight) {
     winnerFntion(topLeft);
-    divOfCells[0].classList.add('won');
-    divOfCells[1].classList.add('won');
-    divOfCells[2].classList.add('won');
+    divBoxes[0].classList.add('won');
+    divBoxes[1].classList.add('won');
+    divBoxes[2].classList.add('won');
   } else if (middleLeft && middleLeft === middleMiddle && middleLeft === middleRight) {
     winnerFntion(middleLeft);
-    divOfCells[3].classList.add('won');
-    divOfCells[4].classList.add('won');
-    divOfCells[5].classList.add('won');
+    divBoxes[3].classList.add('won');
+    divBoxes[4].classList.add('won');
+    divBoxes[5].classList.add('won');
   } else if (bottomLeft && bottomLeft === bottomMiddle && bottomLeft === bottomRight) {
     winnerFntion(bottomLeft);
-    divOfCells[6].classList.add('won');
-    divOfCells[7].classList.add('won');
-    divOfCells[8].classList.add('won');
+    divBoxes[6].classList.add('won');
+    divBoxes[7].classList.add('won');
+    divBoxes[8].classList.add('won');
   } else if (topLeft && topLeft === middleLeft && topLeft === bottomLeft) {
     winnerFntion(topLeft);
-    divOfCells[0].classList.add('won');
-    divOfCells[3].classList.add('won');
-    divOfCells[6].classList.add('won');
+    divBoxes[0].classList.add('won');
+    divBoxes[3].classList.add('won');
+    divBoxes[6].classList.add('won');
   } else if (topMiddle && topMiddle === middleMiddle && topMiddle === bottomMiddle) {
     winnerFntion(topMiddle);
-    divOfCells[1].classList.add('won');
-    divOfCells[4].classList.add('won');
-    divOfCells[7].classList.add('won');
+    divBoxes[1].classList.add('won');
+    divBoxes[4].classList.add('won');
+    divBoxes[7].classList.add('won');
   } else if (topRight && topRight === middleRight && topRight === bottomRight) {
     winnerFntion(topRight);
-    divOfCells[2].classList.add('won');
-    divOfCells[5].classList.add('won');
-    divOfCells[8].classList.add('won');
+    divBoxes[2].classList.add('won');
+    divBoxes[5].classList.add('won');
+    divBoxes[8].classList.add('won');
   } else if (topLeft && topLeft === middleMiddle && topLeft === bottomRight) {
     winnerFntion(topLeft);
-    divOfCells[0].classList.add('won');
-    divOfCells[4].classList.add('won');
-    divOfCells[8].classList.add('won');
+    divBoxes[0].classList.add('won');
+    divBoxes[4].classList.add('won');
+    divBoxes[8].classList.add('won');
   } else if (topRight && topRight === middleMiddle && topRight === bottomLeft) {
     winnerFntion(topRight);
-    divOfCells[2].classList.add('won');
-    divOfCells[4].classList.add('won');
-    divOfCells[6].classList.add('won');
+    divBoxes[2].classList.add('won');
+    divBoxes[4].classList.add('won');
+    divBoxes[6].classList.add('won');
   } else if (topLeft && topMiddle && topRight && middleLeft && middleMiddle && middleRight && bottomLeft && bottomMiddle && bottomRight) {
     gameLive = false;
     statsDiv.innerHTML = 'Game is tied!';
   } else {
-    xTurn = !xTurn;
-    if (xTurn) {
+    playerXTurn = !playerXTurn;
+    if (playerXTurn) {
       statsDiv.innerHTML = `${xLetter} turn`;
     } else {
       statsDiv.innerHTML = `<span>${oLetter} turn</span>`;
@@ -95,9 +96,9 @@ const checkStatusOfGame = () => {
 // event Handlers
 
 const eventHandlerReset = () => {
-  xTurn = true;
+  playerXTurn = true;
   statsDiv.innerHTML = `${xLetter} turn`;
-  for (const cellDiv of divOfCells) {
+  for (const cellDiv of divBoxes) {
     cellDiv.classList.remove('x');
     cellDiv.classList.remove('o');
     cellDiv.classList.remove('won');
@@ -112,7 +113,7 @@ const eventHandlerCellClick = (e) => {
     return;
   }
 
-  if (xTurn) {
+  if (playerXTurn) {
     classList.add('x');
     checkStatusOfGame();
   } else {
@@ -124,24 +125,17 @@ const eventHandlerCellClick = (e) => {
 
 // event listeners
 resetDiv.addEventListener('click', eventHandlerReset);
-
-for (const cellDiv of divOfCells) {
+// loop
+for (const cellDiv of divBoxes) {
   cellDiv.addEventListener('click', eventHandlerCellClick)
 }
 
 
-//add a sound
+//add a sound.. I'm still working on this function
 
 const audioVar = document.querySelector("audio");
 console.log(audioVar)
-/*
-function firstFunction(e) {
 
-audioVar.pause(e);
-
-}
-
-*/
 
 
 function playMusic(audio) {
